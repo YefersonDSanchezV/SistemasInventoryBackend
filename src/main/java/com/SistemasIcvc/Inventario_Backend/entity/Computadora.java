@@ -14,8 +14,9 @@ public class Computadora {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "equipo_id")
-    private Integer equipoId;
+    @OneToOne(optional = false)
+    @JoinColumn(name = "equipo_id", nullable = false)
+    private Equipo equipo;
 
     @Column(name = "licencia_windows")
     private String licenciaWindows;

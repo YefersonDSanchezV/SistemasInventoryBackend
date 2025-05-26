@@ -38,7 +38,7 @@ public class Movil {
     @Column(name = "antivirus")
     private String antivirus;
 
-    @Column(name = "sistemaOperativo")
+    @Column(name = "sistemaoperativo")
     private String sistemaOperativo;
 }
 

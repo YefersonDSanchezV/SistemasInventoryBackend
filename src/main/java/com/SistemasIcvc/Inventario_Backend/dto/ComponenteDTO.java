@@ -13,4 +13,5 @@ public class ComponenteDTO {
     private String modelo;
     private String serial;
     private String marca;
+    private Integer computadoraId;
 }

@@ -25,5 +25,9 @@ public class Componente {
 
     @Column(name = "marca")
     private String marca;
+
+    @ManyToOne
+    @JoinColumn(name = "computadora_id", nullable = false)
+    private Computadora computadora;
 }
 

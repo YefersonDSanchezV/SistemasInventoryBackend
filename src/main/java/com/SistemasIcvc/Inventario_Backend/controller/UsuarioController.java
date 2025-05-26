@@ -34,6 +34,13 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
+    @GetMapping("/nombre-usuario/{nombreUsuario}")
+    public ResponseEntity<UsuarioDTO> consultarPorNombreUsuario(@PathVariable String nombreUsuario) {
+        UsuarioDTO usuario = usuarioServices.consultarPorNombreUsuario(nombreUsuario);
+        return ResponseEntity.ok(usuario);
+    }
+
+
     @GetMapping("/estado/{estado}")
     public ResponseEntity<List<UsuarioDTO>> consultarPorEstado(@PathVariable String estado) {
         List<UsuarioDTO> usuarios = usuarioServices.consultarPorEstado(estado);

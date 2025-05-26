@@ -52,6 +52,14 @@ public class UsuarioServiceImpl implements UsuarioServices {
     }
 
     @Override
+    public UsuarioDTO consultarPorNombreUsuario(String nombreUsuario) {
+        return usuarioRepository.findByNombreUsuario(nombreUsuario)
+                .map(usuarioMapper::toDto)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con nombre: " + nombreUsuario));
+    }
+
+
+    @Override
     public List<UsuarioDTO> consultarPorEstado(String estado) {
         Boolean estadoBool = Boolean.valueOf(estado);
         return usuarioRepository.findAll().stream()

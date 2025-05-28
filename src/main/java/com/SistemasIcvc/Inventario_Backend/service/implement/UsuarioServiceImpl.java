@@ -74,4 +74,13 @@ public class UsuarioServiceImpl implements UsuarioServices {
                 .map(usuarioMapper::toDto)
                 .collect(Collectors.toList());
     }
+
+    public boolean validarLogin(String nombreUsuario, String contrasena) {
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByNombreUsuario(nombreUsuario);
+        if (usuarioOpt.isPresent()) {
+            Usuario usuario = usuarioOpt.get();
+            return usuario.getContrasena().equals(contrasena) && usuario.getEstado();
+        }
+        return false;
+    }
 }

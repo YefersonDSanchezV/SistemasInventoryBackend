@@ -19,4 +19,5 @@ public class UsuarioDTO {
     private String contrasena;
     private Boolean estado;
     private LocalDateTime fechaCreacion;
+
 }

@@ -71,6 +71,7 @@ public class UsuarioServiceImpl implements UsuarioServices {
     @Override
     public List<UsuarioDTO> listarTodos() {
         return usuarioRepository.findAll().stream()
+                //.filter(u -> u.getPersona() != null)
                 .map(usuarioMapper::toDto)
                 .collect(Collectors.toList());
     }

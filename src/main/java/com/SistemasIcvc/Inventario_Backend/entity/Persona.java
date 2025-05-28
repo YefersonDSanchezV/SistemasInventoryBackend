@@ -36,7 +36,7 @@ public class Persona {
     @Column(name = "telefono", nullable = false)
     private String telefono;
 
-    @Column(name = "ididentificacion", nullable = false)
+    @Column(name = "ididentificacion", nullable = false, unique = true)
     private String ididentificacion;
 }
 

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -19,5 +20,6 @@ public class UsuarioDTO {
     private String contrasena;
     private Boolean estado;
     private LocalDateTime fechaCreacion;
+    private List<String> roles;
 
 }

@@ -28,6 +28,12 @@ public class RolesUsuariosServiceImpl implements RolesUsuariosService {
         Usuario usuario = usuarioRepository.findByNombreUsuario(rolesUsuariosDTO.getNombreUsuario())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
+        // Verificar  si el usuario ya tiene un rol asignado
+        List<RolesUsuarios> rolesAsigandos = rolesUsuariosRepository.findByUsuario(usuario);
+        if(!rolesAsigandos.isEmpty()) {
+            throw new RuntimeException("El usuario ya tiene un rol asignado");
+        }
+
         // Buscar el rol por su nombre
         Rol rol = rolRepository.findByNombreRol(rolesUsuariosDTO.getNombreRol())
                 .orElseThrow(() -> new RuntimeException("Rol no encontrado"));

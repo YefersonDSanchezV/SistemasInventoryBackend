@@ -23,16 +23,18 @@ public class ComputadoraServiceImpl implements ComputadoraService {
 
     @Override
     public ComputadoraDTO registrar(ComputadoraDTO dto) {
+        Computadora computadora = computadoraMapper.toEntity(dto);
 
-        if(dto.getTipoEquipo() != null){
-            Equipo equipo = equipoRepository.findFirstByTipoEquipoIgnoreCase(dto.getTipoEquipo())
-                    .orElseThrow(() -> new RuntimeException("Equipo no encontrado con nombre: " + dto.getTipoEquipo()));
-            dto.setEquipoId(equipo.getId());
+        if (dto.getEquipoId() != null) {
+            Equipo equipo = equipoRepository.findById(dto.getEquipoId())
+                    .orElseThrow(() -> new RuntimeException("Equipo no encontrado con ID: " + dto.getEquipoId()));
+            computadora.setEquipo(equipo); // ← ESTO ES CLAVE
         }
 
-        Computadora computadora = computadoraMapper.toEntity(dto);
-        return computadoraMapper.toDto(computadoraRepository.save(computadora));
+        computadora = computadoraRepository.save(computadora);
+        return computadoraMapper.toDto(computadora);
     }
+
 
     @Override
     public ComputadoraDTO editar(Long id, ComputadoraDTO dto) {

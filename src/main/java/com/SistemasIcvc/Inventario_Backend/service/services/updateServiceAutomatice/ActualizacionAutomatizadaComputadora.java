@@ -1,0 +1,7 @@
+package com.SistemasIcvc.Inventario_Backend.service.services.updateServiceAutomatice;
+
+import com.SistemasIcvc.Inventario_Backend.dto.actualizacionesAutomatizadas.ActualizacionAutomaticaComputadoraDTO;
+
+public interface ActualizacionAutomatizadaComputadora {
+    void actualizarComputadoraConComponentes(Long idEquipo, ActualizacionAutomaticaComputadoraDTO actualizacionAutomaticaComputadoraDTO);
+}

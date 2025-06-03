@@ -1,6 +1,14 @@
 package com.SistemasIcvc.Inventario_Backend.service.AutomaticeService;
 
 import com.SistemasIcvc.Inventario_Backend.dto.*;
+import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoComputadoraDTO;
+import com.SistemasIcvc.Inventario_Backend.entity.Componente;
+import com.SistemasIcvc.Inventario_Backend.entity.Computadora;
+import com.SistemasIcvc.Inventario_Backend.mapper.ComponenteMapper;
+import com.SistemasIcvc.Inventario_Backend.mapper.ComputadoraMapper;
+import com.SistemasIcvc.Inventario_Backend.mapper.EquipoMapper;
+import com.SistemasIcvc.Inventario_Backend.repository.ComponenteRepository;
+import com.SistemasIcvc.Inventario_Backend.repository.ComputadoraRepository;
 import com.SistemasIcvc.Inventario_Backend.service.services.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -10,10 +18,18 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class RegistroAutomatizadoService {
+
+    private final ComputadoraMapper computadoraMapper;
+    private final EquipoMapper equipoMapper;
+    private final ComponenteMapper componenteMapper;
+
+    private final ComputadoraRepository computadoraRepository;
+    private final ComponenteRepository componenteRepository;
 
     private final AuditoriaService auditoriaService;
     private final MovilService movilService;
@@ -27,6 +43,9 @@ public class RegistroAutomatizadoService {
     @Transactional
     public void registrarComputadoraConComponentes(EquipoDTO equipoDTO, ComputadoraDTO computadoraDTO, List<ComponenteDTO> componentes) {
         EquipoDTO equipoRegistrado = equipoService.registrarEquipo(equipoDTO);
+
+        computadoraDTO.setEquipoId(equipoRegistrado.getId());
+
         ComputadoraDTO computadoraRegistrada = computadoraService.registrar(computadoraDTO);
 
 
@@ -71,4 +90,18 @@ public class RegistroAutomatizadoService {
         camaraDTO.setEquipoId(equipoRegistrado.getId());
         camaraService.registrar(camaraDTO);
     }
+
+    public List<RegistroAutomatizadoComputadoraDTO> listarComputadorasConComponentes() {
+        List<Computadora> computadoras = computadoraRepository.findAll();
+
+        return computadoras.stream().map(comp -> {
+            RegistroAutomatizadoComputadoraDTO dto = new RegistroAutomatizadoComputadoraDTO();
+            dto.setComputadora(computadoraMapper.toDto(comp));
+            dto.setEquipo(equipoMapper.toDto(comp.getEquipo()));
+            List<Componente> componentes = componenteRepository.findByComputadoraId(comp.getId());
+            dto.setComponentes(componentes.stream().map(componenteMapper::toDto).collect(Collectors.toList()));
+            return dto;
+        }).collect(Collectors.toList());
+    }
+
 }

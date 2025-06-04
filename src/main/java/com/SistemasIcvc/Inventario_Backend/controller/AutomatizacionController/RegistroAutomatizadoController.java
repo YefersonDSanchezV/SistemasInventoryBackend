@@ -1,9 +1,7 @@
-package com.SistemasIcvc.Inventario_Backend.controller;
+package com.SistemasIcvc.Inventario_Backend.controller.AutomatizacionController;
 
 
-import com.SistemasIcvc.Inventario_Backend.dto.actualizacionesAutomatizadas.ActualizacionAutomaticaComputadoraDTO;
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.*;
-import com.SistemasIcvc.Inventario_Backend.service.AutomaticeService.ActualizacionAutomatizadaService;
 import com.SistemasIcvc.Inventario_Backend.service.AutomaticeService.RegistroAutomatizadoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,18 +14,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RegistroAutomatizadoController {
 
-    private final ActualizacionAutomatizadaService actualizacionAutomatizadaService;
     private final RegistroAutomatizadoService registroAutomatizadoService;
 
     @PostMapping("/computadora-completa")
     public ResponseEntity<Void> registrarComputadoraConComponentes(@RequestBody RegistroAutomatizadoComputadoraDTO request) {
         registroAutomatizadoService.registrarComputadoraConComponentes(request.getEquipo(), request.getComputadora(), request.getComponentes());
         return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/computadoras-completas")
-    public ResponseEntity<List<RegistroAutomatizadoComputadoraDTO>> consultarComputadorasConComponentes() {
-        return ResponseEntity.ok(registroAutomatizadoService.listarComputadorasConComponentes());
     }
 
 

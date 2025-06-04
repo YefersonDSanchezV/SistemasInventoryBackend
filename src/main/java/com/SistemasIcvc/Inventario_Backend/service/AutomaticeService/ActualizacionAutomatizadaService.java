@@ -1,12 +1,16 @@
 package com.SistemasIcvc.Inventario_Backend.service.AutomaticeService;
 
 import com.SistemasIcvc.Inventario_Backend.dto.actualizacionesAutomatizadas.ActualizacionAutomaticaComputadoraDTO;
+import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoCamarasDTO;
+import com.SistemasIcvc.Inventario_Backend.entity.Camara;
 import com.SistemasIcvc.Inventario_Backend.entity.Componente;
 import com.SistemasIcvc.Inventario_Backend.entity.Computadora;
 import com.SistemasIcvc.Inventario_Backend.entity.Equipo;
+import com.SistemasIcvc.Inventario_Backend.mapper.CamaraMapper;
 import com.SistemasIcvc.Inventario_Backend.mapper.ComponenteMapper;
 import com.SistemasIcvc.Inventario_Backend.mapper.ComputadoraMapper;
 import com.SistemasIcvc.Inventario_Backend.mapper.EquipoMapper;
+import com.SistemasIcvc.Inventario_Backend.repository.CamaraRepository;
 import com.SistemasIcvc.Inventario_Backend.repository.ComponenteRepository;
 import com.SistemasIcvc.Inventario_Backend.repository.ComputadoraRepository;
 import com.SistemasIcvc.Inventario_Backend.repository.EquipoRepository;
@@ -22,9 +26,11 @@ public class ActualizacionAutomatizadaService implements ActualizacionAutomatiza
 
     private final EquipoRepository equipoRepository;
     private final ComputadoraRepository computadoraRepository;
+    private final CamaraRepository camaraRepository;
     private final ComponenteRepository componenteRepository;
 
     private final EquipoMapper equipoMapper;
+    private final CamaraMapper camaraMapper;
     private final ComponenteMapper componenteMapper;
     private final ComputadoraMapper computadoraMapper;
 
@@ -47,5 +53,17 @@ public class ActualizacionAutomatizadaService implements ActualizacionAutomatiza
                 })
                 .toList();
         componenteRepository.saveAll(componentes);
+    }
+
+    @Override
+    public void actualizarCamaraConEquipo(Long idEquipo, RegistroAutomatizadoCamarasDTO dto) {
+        Equipo equipo = equipoMapper.toEntity(dto.getEquipo());
+        equipo.setId(idEquipo.intValue());
+        equipoRepository.save(equipo);
+
+        Camara camara = camaraMapper.toEntity(dto.getCamara());
+        camara.setId(equipo.getId());
+        camara.setId(dto.getCamara().getId());
+        camaraRepository.save(camara);
     }
 }

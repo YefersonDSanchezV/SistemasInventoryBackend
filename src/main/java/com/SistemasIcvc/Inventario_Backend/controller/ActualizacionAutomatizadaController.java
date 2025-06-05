@@ -1,9 +1,9 @@
-package com.SistemasIcvc.Inventario_Backend.controller.AutomatizacionController;
+package com.SistemasIcvc.Inventario_Backend.controller;
 
 import com.SistemasIcvc.Inventario_Backend.dto.actualizacionesAutomatizadas.ActualizacionAutomaticaComputadoraDTO;
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoCamarasDTO;
-import com.SistemasIcvc.Inventario_Backend.service.AutomaticeService.ActualizacionAutomatizadaService;
-import com.SistemasIcvc.Inventario_Backend.service.services.updateServiceAutomatice.ActualizacionAutomatizadaCamara;
+import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoMovilDTO;
+import com.SistemasIcvc.Inventario_Backend.service.AutomaticeService.ActualizacionAutomatizadaServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ActualizacionAutomatizadaController {
 
-    private final ActualizacionAutomatizadaService actualizacionAutomatizadaService;
-
+    private final ActualizacionAutomatizadaServiceImpl actualizacionAutomatizadaService;
 
     @PutMapping("/computadora-completa/{idEquipo}")
     public ResponseEntity<Void> actualizarComputadoraCompleta(
@@ -29,6 +28,14 @@ public class ActualizacionAutomatizadaController {
             @PathVariable Long idEquipo,
             @RequestBody RegistroAutomatizadoCamarasDTO dto) {
         actualizacionAutomatizadaService.actualizarCamaraConEquipo(idEquipo, dto);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/movil-completo/{idEquipo}")
+    public ResponseEntity<Void> actualizarMovilCompleto(
+            @PathVariable Long idEquipo,
+            @RequestBody RegistroAutomatizadoMovilDTO dto) {
+        actualizacionAutomatizadaService.actualizarMovilConEquipo(idEquipo, dto);
         return ResponseEntity.ok().build();
     }
 }

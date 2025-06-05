@@ -14,8 +14,8 @@ public class Camara {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "equipo_id", insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    @JoinColumn(name = "equipo_id", nullable = false)
     private Equipo equipo;
 
     @Column(name = "nvr_relacionado")

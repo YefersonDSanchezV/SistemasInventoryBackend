@@ -2,19 +2,11 @@ package com.SistemasIcvc.Inventario_Backend.service.AutomaticeService;
 
 import com.SistemasIcvc.Inventario_Backend.dto.actualizacionesAutomatizadas.ActualizacionAutomaticaComputadoraDTO;
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoCamarasDTO;
-import com.SistemasIcvc.Inventario_Backend.entity.Camara;
-import com.SistemasIcvc.Inventario_Backend.entity.Componente;
-import com.SistemasIcvc.Inventario_Backend.entity.Computadora;
-import com.SistemasIcvc.Inventario_Backend.entity.Equipo;
-import com.SistemasIcvc.Inventario_Backend.mapper.CamaraMapper;
-import com.SistemasIcvc.Inventario_Backend.mapper.ComponenteMapper;
-import com.SistemasIcvc.Inventario_Backend.mapper.ComputadoraMapper;
-import com.SistemasIcvc.Inventario_Backend.mapper.EquipoMapper;
-import com.SistemasIcvc.Inventario_Backend.repository.CamaraRepository;
-import com.SistemasIcvc.Inventario_Backend.repository.ComponenteRepository;
-import com.SistemasIcvc.Inventario_Backend.repository.ComputadoraRepository;
-import com.SistemasIcvc.Inventario_Backend.repository.EquipoRepository;
-import com.SistemasIcvc.Inventario_Backend.service.services.updateServiceAutomatice.ActualizacionAutomatizadaComputadora;
+import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoMovilDTO;
+import com.SistemasIcvc.Inventario_Backend.entity.*;
+import com.SistemasIcvc.Inventario_Backend.mapper.*;
+import com.SistemasIcvc.Inventario_Backend.repository.*;
+import com.SistemasIcvc.Inventario_Backend.service.services.updateServiceAutomatice.ActualizacionAutomatizadaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,17 +14,19 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ActualizacionAutomatizadaService implements ActualizacionAutomatizadaComputadora {
+public class ActualizacionAutomatizadaServiceImpl implements ActualizacionAutomatizadaService {
 
     private final EquipoRepository equipoRepository;
     private final ComputadoraRepository computadoraRepository;
-    private final CamaraRepository camaraRepository;
     private final ComponenteRepository componenteRepository;
+    private final CamaraRepository camaraRepository;
+    private final MovilRepository movilRepository;
 
     private final EquipoMapper equipoMapper;
-    private final CamaraMapper camaraMapper;
     private final ComponenteMapper componenteMapper;
     private final ComputadoraMapper computadoraMapper;
+    private final CamaraMapper camaraMapper;
+    private final MovilMapper movilMapper;
 
     @Override
     public void actualizarComputadoraConComponentes(Long idEquipo, ActualizacionAutomaticaComputadoraDTO dto) {
@@ -62,8 +56,22 @@ public class ActualizacionAutomatizadaService implements ActualizacionAutomatiza
         equipoRepository.save(equipo);
 
         Camara camara = camaraMapper.toEntity(dto.getCamara());
-        camara.setId(equipo.getId());
         camara.setId(dto.getCamara().getId());
+        camara.setEquipo(equipo);
         camaraRepository.save(camara);
     }
+
+    @Override
+    public void actualizarMovilConEquipo(Long idEquipo, RegistroAutomatizadoMovilDTO dto) {
+        Equipo equipo = equipoMapper.toEntity(dto.getEquipo());
+        equipo.setId(idEquipo.intValue());
+        equipoRepository.save(equipo);
+
+        Movil movil = movilMapper.toEntity(dto.getMovil());
+        movil.setId(dto.getMovil().getId());
+        movil.setEquipo(equipo);
+        movilRepository.save(movil);
+    }
+
+
 }

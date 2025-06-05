@@ -1,8 +1,9 @@
-package com.SistemasIcvc.Inventario_Backend.controller.AutomatizacionController;
+package com.SistemasIcvc.Inventario_Backend.controller;
 
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoCamarasDTO;
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoComputadoraDTO;
-import com.SistemasIcvc.Inventario_Backend.service.AutomaticeService.ConsultasAutomatizadasService;
+import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoMovilDTO;
+import com.SistemasIcvc.Inventario_Backend.service.AutomaticeService.ConsultasAutomatizasService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ConsultasAutomatizadasController {
 
-    private final ConsultasAutomatizadasService consultasAutomatizadasService;
+    private final ConsultasAutomatizasService consultasAutomatizadasService;
 
     @GetMapping("/computadoras-completas")
     public ResponseEntity<List<RegistroAutomatizadoComputadoraDTO>> consultarComputadorasConComponentes() {
@@ -26,5 +27,10 @@ public class ConsultasAutomatizadasController {
     @GetMapping("/camaras-completas")
     public ResponseEntity<List<RegistroAutomatizadoCamarasDTO>> consultarCamarasConEquipos() {
         return ResponseEntity.ok(consultasAutomatizadasService.listarCamarasConEquipos());
+    }
+
+    @GetMapping("/moviles-completos")
+    public ResponseEntity<List<RegistroAutomatizadoMovilDTO>> consultarMovilesConEquipos() {
+        return ResponseEntity.ok(consultasAutomatizadasService.listarMovilesConEquipos());
     }
 }

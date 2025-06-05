@@ -1,4 +1,4 @@
-package com.SistemasIcvc.Inventario_Backend.controller.AutomatizacionController;
+package com.SistemasIcvc.Inventario_Backend.controller;
 
 
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.*;
@@ -20,6 +20,11 @@ public class RegistroAutomatizadoController {
     public ResponseEntity<Void> registrarComputadoraConComponentes(@RequestBody RegistroAutomatizadoComputadoraDTO request) {
         registroAutomatizadoService.registrarComputadoraConComponentes(request.getEquipo(), request.getComputadora(), request.getComponentes());
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/computadoras-completas")
+    public ResponseEntity<List<RegistroAutomatizadoComputadoraDTO>> consultarComputadorasConComponentes() {
+        return ResponseEntity.ok(registroAutomatizadoService.listarComputadorasConComponentes());
     }
 
 

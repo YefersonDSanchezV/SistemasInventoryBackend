@@ -2,16 +2,16 @@ package com.SistemasIcvc.Inventario_Backend.service.AutomaticeService;
 
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoCamarasDTO;
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoComputadoraDTO;
+import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoMovilDTO;
 import com.SistemasIcvc.Inventario_Backend.entity.Camara;
 import com.SistemasIcvc.Inventario_Backend.entity.Componente;
 import com.SistemasIcvc.Inventario_Backend.entity.Computadora;
-import com.SistemasIcvc.Inventario_Backend.mapper.CamaraMapper;
-import com.SistemasIcvc.Inventario_Backend.mapper.ComponenteMapper;
-import com.SistemasIcvc.Inventario_Backend.mapper.ComputadoraMapper;
-import com.SistemasIcvc.Inventario_Backend.mapper.EquipoMapper;
+import com.SistemasIcvc.Inventario_Backend.entity.Movil;
+import com.SistemasIcvc.Inventario_Backend.mapper.*;
 import com.SistemasIcvc.Inventario_Backend.repository.CamaraRepository;
 import com.SistemasIcvc.Inventario_Backend.repository.ComponenteRepository;
 import com.SistemasIcvc.Inventario_Backend.repository.ComputadoraRepository;
+import com.SistemasIcvc.Inventario_Backend.repository.MovilRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,16 +20,17 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ConsultasAutomatizadasService {
-
+public class ConsultasAutomatizasService {
     private final ComputadoraRepository computadoraRepository;
     private final ComponenteRepository componenteRepository;
     private final CamaraRepository camaraRepository;
+    private final MovilRepository movilRepository;
 
     private final ComputadoraMapper computadoraMapper;
     private final ComponenteMapper componenteMapper;
     private final CamaraMapper camaraMapper;
     private final EquipoMapper equipoMapper;
+    private final MovilMapper movilMapper;
 
     public List<RegistroAutomatizadoComputadoraDTO> listarComputadorasConComponentes() {
         List<Computadora> computadoras = computadoraRepository.findAll();
@@ -54,4 +55,16 @@ public class ConsultasAutomatizadasService {
             return dto;
         }).collect(Collectors.toList());
     }
+
+    public List<RegistroAutomatizadoMovilDTO> listarMovilesConEquipos() {
+        List<Movil> movil = movilRepository.findAll();
+
+        return movil.stream().map(mov -> {
+            RegistroAutomatizadoMovilDTO dto = new RegistroAutomatizadoMovilDTO();
+            dto.setMovil(movilMapper.toDto(mov));
+            dto.setEquipo(equipoMapper.toDto(mov.getEquipo()));
+            return dto;
+        }).collect(Collectors.toList());
+    }
+
 }

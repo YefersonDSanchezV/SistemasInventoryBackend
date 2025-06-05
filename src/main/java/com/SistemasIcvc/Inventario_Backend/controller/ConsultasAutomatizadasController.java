@@ -2,6 +2,7 @@ package com.SistemasIcvc.Inventario_Backend.controller;
 
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoCamarasDTO;
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoComputadoraDTO;
+import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoImpresoraDTO;
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoMovilDTO;
 import com.SistemasIcvc.Inventario_Backend.service.AutomaticeService.ConsultasAutomatizasService;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +33,10 @@ public class ConsultasAutomatizadasController {
     @GetMapping("/moviles-completos")
     public ResponseEntity<List<RegistroAutomatizadoMovilDTO>> consultarMovilesConEquipos() {
         return ResponseEntity.ok(consultasAutomatizadasService.listarMovilesConEquipos());
+    }
+
+    @GetMapping("/impresoras-completas")
+    public ResponseEntity<List<RegistroAutomatizadoImpresoraDTO>> consultarImpresorasConEquipos() {
+        return ResponseEntity.ok(consultasAutomatizadasService.listarImpresorasConEquipos());
     }
 }

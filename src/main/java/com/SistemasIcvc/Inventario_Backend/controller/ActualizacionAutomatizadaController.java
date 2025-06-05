@@ -2,6 +2,7 @@ package com.SistemasIcvc.Inventario_Backend.controller;
 
 import com.SistemasIcvc.Inventario_Backend.dto.actualizacionesAutomatizadas.ActualizacionAutomaticaComputadoraDTO;
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoCamarasDTO;
+import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoImpresoraDTO;
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoMovilDTO;
 import com.SistemasIcvc.Inventario_Backend.service.AutomaticeService.ActualizacionAutomatizadaServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,14 @@ public class ActualizacionAutomatizadaController {
             @PathVariable Long idEquipo,
             @RequestBody RegistroAutomatizadoMovilDTO dto) {
         actualizacionAutomatizadaService.actualizarMovilConEquipo(idEquipo, dto);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/impresora-completa/{idEquipo}")
+    public ResponseEntity<Void> actualizarImpresoraCompleta(
+            @PathVariable Long idEquipo,
+            @RequestBody RegistroAutomatizadoImpresoraDTO dto) {
+        actualizacionAutomatizadaService.actualizarImpresoraConEquipo(idEquipo, dto);
         return ResponseEntity.ok().build();
     }
 }

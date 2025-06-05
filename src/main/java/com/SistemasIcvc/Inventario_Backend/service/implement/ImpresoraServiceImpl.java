@@ -1,8 +1,10 @@
 package com.SistemasIcvc.Inventario_Backend.service.implement;
 
 import com.SistemasIcvc.Inventario_Backend.dto.ImpresoraDTO;
+import com.SistemasIcvc.Inventario_Backend.entity.Equipo;
 import com.SistemasIcvc.Inventario_Backend.entity.Impresora;
 import com.SistemasIcvc.Inventario_Backend.mapper.ImpresoraMapper;
+import com.SistemasIcvc.Inventario_Backend.repository.EquipoRepository;
 import com.SistemasIcvc.Inventario_Backend.repository.ImpresoraRepository;
 import com.SistemasIcvc.Inventario_Backend.service.services.ImpresoraService;
 import lombok.RequiredArgsConstructor;
@@ -16,11 +18,17 @@ import java.util.stream.Collectors;
 public class ImpresoraServiceImpl implements ImpresoraService {
 
     private final ImpresoraRepository impresoraRepository;
+    private final EquipoRepository equipoRepository;
     private final ImpresoraMapper impresoraMapper;
 
     @Override
     public ImpresoraDTO registrar(ImpresoraDTO dto) {
-        return impresoraMapper.toDto(impresoraRepository.save(impresoraMapper.toEntity(dto)));
+        Impresora impresora = impresoraMapper.toEntity(dto);
+        Equipo equipo = equipoRepository.findById(dto.getEquipoId())
+                .orElseThrow(() -> new RuntimeException("Equipo no encontrado con id: " + dto.getEquipoId()));
+        impresora.setEquipo(equipo);
+        Impresora guardada = impresoraRepository.save(impresora);
+        return impresoraMapper.toDto(guardada);
     }
 
     @Override

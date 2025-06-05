@@ -2,16 +2,11 @@ package com.SistemasIcvc.Inventario_Backend.service.AutomaticeService;
 
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoCamarasDTO;
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoComputadoraDTO;
+import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoImpresoraDTO;
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoMovilDTO;
-import com.SistemasIcvc.Inventario_Backend.entity.Camara;
-import com.SistemasIcvc.Inventario_Backend.entity.Componente;
-import com.SistemasIcvc.Inventario_Backend.entity.Computadora;
-import com.SistemasIcvc.Inventario_Backend.entity.Movil;
+import com.SistemasIcvc.Inventario_Backend.entity.*;
 import com.SistemasIcvc.Inventario_Backend.mapper.*;
-import com.SistemasIcvc.Inventario_Backend.repository.CamaraRepository;
-import com.SistemasIcvc.Inventario_Backend.repository.ComponenteRepository;
-import com.SistemasIcvc.Inventario_Backend.repository.ComputadoraRepository;
-import com.SistemasIcvc.Inventario_Backend.repository.MovilRepository;
+import com.SistemasIcvc.Inventario_Backend.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +16,16 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ConsultasAutomatizasService {
+
     private final ComputadoraRepository computadoraRepository;
     private final ComponenteRepository componenteRepository;
+    private final ImpresoraRepository impresoraRepository;
     private final CamaraRepository camaraRepository;
     private final MovilRepository movilRepository;
 
     private final ComputadoraMapper computadoraMapper;
     private final ComponenteMapper componenteMapper;
+    private final ImpresoraMapper impresoraMapper;
     private final CamaraMapper camaraMapper;
     private final EquipoMapper equipoMapper;
     private final MovilMapper movilMapper;
@@ -67,4 +65,14 @@ public class ConsultasAutomatizasService {
         }).collect(Collectors.toList());
     }
 
+    public List<RegistroAutomatizadoImpresoraDTO> listarImpresorasConEquipos(){
+        List<Impresora> impresoras = impresoraRepository.findAll();
+
+        return impresoras.stream().map(imp -> {
+            RegistroAutomatizadoImpresoraDTO dto = new RegistroAutomatizadoImpresoraDTO();
+            dto.setImpresora(impresoraMapper.toDto(imp));
+            dto.setEquipo(equipoMapper.toDto(imp.getEquipo()));
+            return dto;
+        }).collect(Collectors.toList());
+    }
 }

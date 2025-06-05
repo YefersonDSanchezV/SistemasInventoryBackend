@@ -2,6 +2,7 @@ package com.SistemasIcvc.Inventario_Backend.service.AutomaticeService;
 
 import com.SistemasIcvc.Inventario_Backend.dto.actualizacionesAutomatizadas.ActualizacionAutomaticaComputadoraDTO;
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoCamarasDTO;
+import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoImpresoraDTO;
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoMovilDTO;
 import com.SistemasIcvc.Inventario_Backend.entity.*;
 import com.SistemasIcvc.Inventario_Backend.mapper.*;
@@ -19,12 +20,14 @@ public class ActualizacionAutomatizadaServiceImpl implements ActualizacionAutoma
     private final EquipoRepository equipoRepository;
     private final ComputadoraRepository computadoraRepository;
     private final ComponenteRepository componenteRepository;
+    private final ImpresoraRepository impresoraRepository;
     private final CamaraRepository camaraRepository;
     private final MovilRepository movilRepository;
 
     private final EquipoMapper equipoMapper;
     private final ComponenteMapper componenteMapper;
     private final ComputadoraMapper computadoraMapper;
+    private final ImpresoraMapper impresoraMapper;
     private final CamaraMapper camaraMapper;
     private final MovilMapper movilMapper;
 
@@ -73,5 +76,15 @@ public class ActualizacionAutomatizadaServiceImpl implements ActualizacionAutoma
         movilRepository.save(movil);
     }
 
+    @Override
+    public void actualizarImpresoraConEquipo(Long idEquipo, RegistroAutomatizadoImpresoraDTO dto) {
+        Equipo equipo = equipoMapper.toEntity(dto.getEquipo());
+        equipo.setId(idEquipo.intValue());
+        equipoRepository.save(equipo);
 
+        Impresora impresora = impresoraMapper.toEntity(dto.getImpresora());
+        impresora.setId(dto.getImpresora().getId());
+        impresora.setEquipo(equipo);
+        impresoraRepository.save(impresora);
+    }
 }

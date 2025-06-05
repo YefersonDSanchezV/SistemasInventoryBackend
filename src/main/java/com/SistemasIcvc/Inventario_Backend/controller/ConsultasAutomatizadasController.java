@@ -1,9 +1,6 @@
 package com.SistemasIcvc.Inventario_Backend.controller;
 
-import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoCamarasDTO;
-import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoComputadoraDTO;
-import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoImpresoraDTO;
-import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoMovilDTO;
+import com.SistemasIcvc.Inventario_Backend.dto.automatizado.*;
 import com.SistemasIcvc.Inventario_Backend.service.AutomaticeService.ConsultasAutomatizasService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -38,5 +35,10 @@ public class ConsultasAutomatizadasController {
     @GetMapping("/impresoras-completas")
     public ResponseEntity<List<RegistroAutomatizadoImpresoraDTO>> consultarImpresorasConEquipos() {
         return ResponseEntity.ok(consultasAutomatizadasService.listarImpresorasConEquipos());
+    }
+
+    @GetMapping("/telefonos-completos")
+    public ResponseEntity<List<RegistroAutomatizadoTelefonoDTO>> consultarTelefonosConEquipos() {
+        return ResponseEntity.ok(consultasAutomatizadasService.listarTelefonosConEquipos());
     }
 }

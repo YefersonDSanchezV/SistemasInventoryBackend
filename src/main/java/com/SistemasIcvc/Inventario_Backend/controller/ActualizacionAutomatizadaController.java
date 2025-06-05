@@ -4,6 +4,7 @@ import com.SistemasIcvc.Inventario_Backend.dto.actualizacionesAutomatizadas.Actu
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoCamarasDTO;
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoImpresoraDTO;
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoMovilDTO;
+import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoTelefonoDTO;
 import com.SistemasIcvc.Inventario_Backend.service.AutomaticeService.ActualizacionAutomatizadaServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +46,14 @@ public class ActualizacionAutomatizadaController {
             @PathVariable Long idEquipo,
             @RequestBody RegistroAutomatizadoImpresoraDTO dto) {
         actualizacionAutomatizadaService.actualizarImpresoraConEquipo(idEquipo, dto);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/telefono-completo/{idEquipo}")
+    public ResponseEntity<Void> actualizarTelefonoCompleto(
+            @PathVariable Long idEquipo,
+            @RequestBody RegistroAutomatizadoTelefonoDTO dto) {
+        actualizacionAutomatizadaService.actualizarTelefonoConEquipo(idEquipo, dto);
         return ResponseEntity.ok().build();
     }
 }

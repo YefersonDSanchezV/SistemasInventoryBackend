@@ -4,6 +4,7 @@ import com.SistemasIcvc.Inventario_Backend.dto.actualizacionesAutomatizadas.Actu
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoCamarasDTO;
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoImpresoraDTO;
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoMovilDTO;
+import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoTelefonoDTO;
 import com.SistemasIcvc.Inventario_Backend.entity.*;
 import com.SistemasIcvc.Inventario_Backend.mapper.*;
 import com.SistemasIcvc.Inventario_Backend.repository.*;
@@ -21,6 +22,7 @@ public class ActualizacionAutomatizadaServiceImpl implements ActualizacionAutoma
     private final ComputadoraRepository computadoraRepository;
     private final ComponenteRepository componenteRepository;
     private final ImpresoraRepository impresoraRepository;
+    private final TelefonoRepository telefonoRepository;
     private final CamaraRepository camaraRepository;
     private final MovilRepository movilRepository;
 
@@ -28,6 +30,7 @@ public class ActualizacionAutomatizadaServiceImpl implements ActualizacionAutoma
     private final ComponenteMapper componenteMapper;
     private final ComputadoraMapper computadoraMapper;
     private final ImpresoraMapper impresoraMapper;
+    private final TelefonoMapper telefonoMapper;
     private final CamaraMapper camaraMapper;
     private final MovilMapper movilMapper;
 
@@ -87,4 +90,18 @@ public class ActualizacionAutomatizadaServiceImpl implements ActualizacionAutoma
         impresora.setEquipo(equipo);
         impresoraRepository.save(impresora);
     }
+
+    @Override
+    public void actualizarTelefonoConEquipo(Long idEquipo, RegistroAutomatizadoTelefonoDTO dto) {
+        Equipo equipo = equipoMapper.toEntity(dto.getEquipo());
+        equipo.setId(idEquipo.intValue());
+        equipoRepository.save(equipo);
+
+        Telefono telefono = telefonoMapper.toEntity(dto.getTelefono());
+        telefono.setId(dto.getTelefono().getId());
+        telefono.setEquipo(equipo);
+        telefonoRepository.save(telefono);
+    }
+
+
 }

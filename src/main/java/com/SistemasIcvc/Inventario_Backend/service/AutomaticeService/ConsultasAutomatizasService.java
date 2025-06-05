@@ -1,9 +1,6 @@
 package com.SistemasIcvc.Inventario_Backend.service.AutomaticeService;
 
-import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoCamarasDTO;
-import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoComputadoraDTO;
-import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoImpresoraDTO;
-import com.SistemasIcvc.Inventario_Backend.dto.automatizado.RegistroAutomatizadoMovilDTO;
+import com.SistemasIcvc.Inventario_Backend.dto.automatizado.*;
 import com.SistemasIcvc.Inventario_Backend.entity.*;
 import com.SistemasIcvc.Inventario_Backend.mapper.*;
 import com.SistemasIcvc.Inventario_Backend.repository.*;
@@ -20,12 +17,14 @@ public class ConsultasAutomatizasService {
     private final ComputadoraRepository computadoraRepository;
     private final ComponenteRepository componenteRepository;
     private final ImpresoraRepository impresoraRepository;
+    private final TelefonoRepository telefonoRepository;
     private final CamaraRepository camaraRepository;
     private final MovilRepository movilRepository;
 
     private final ComputadoraMapper computadoraMapper;
     private final ComponenteMapper componenteMapper;
     private final ImpresoraMapper impresoraMapper;
+    private final TelefonoMapper telefonoMapper;
     private final CamaraMapper camaraMapper;
     private final EquipoMapper equipoMapper;
     private final MovilMapper movilMapper;
@@ -72,6 +71,16 @@ public class ConsultasAutomatizasService {
             RegistroAutomatizadoImpresoraDTO dto = new RegistroAutomatizadoImpresoraDTO();
             dto.setImpresora(impresoraMapper.toDto(imp));
             dto.setEquipo(equipoMapper.toDto(imp.getEquipo()));
+            return dto;
+        }).collect(Collectors.toList());
+    }
+
+    public List<RegistroAutomatizadoTelefonoDTO> listarTelefonosConEquipos() {
+        List<Telefono> telefonos = telefonoRepository.findAll();
+        return telefonos.stream().map(tel -> {
+            RegistroAutomatizadoTelefonoDTO dto = new RegistroAutomatizadoTelefonoDTO();
+            dto.setTelefono(telefonoMapper.toDto(tel));
+            dto.setEquipo(equipoMapper.toDto(tel.getEquipo()));
             return dto;
         }).collect(Collectors.toList());
     }

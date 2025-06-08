@@ -9,4 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface ComputadoraRepository extends JpaRepository<Computadora, Integer> {
+    Optional<Computadora> findByEquipo(Equipo equipo);
 }

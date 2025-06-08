@@ -2,6 +2,8 @@ package com.SistemasIcvc.Inventario_Backend.controller;
 
 import com.SistemasIcvc.Inventario_Backend.dto.automatizado.*;
 import com.SistemasIcvc.Inventario_Backend.service.AutomaticeService.ConsultasAutomatizasService;
+import com.SistemasIcvc.Inventario_Backend.service.services.EquipoGeneralService;
+import com.SistemasIcvc.Inventario_Backend.service.services.UsuarioConsultarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import java.util.List;
 public class ConsultasAutomatizadasController {
 
     private final ConsultasAutomatizasService consultasAutomatizadasService;
+    private final UsuarioConsultarService usuarioConsultarService;
 
     @GetMapping("/computadoras-completas")
     public ResponseEntity<List<RegistroAutomatizadoComputadoraDTO>> consultarComputadorasConComponentes() {
@@ -40,5 +43,15 @@ public class ConsultasAutomatizadasController {
     @GetMapping("/telefonos-completos")
     public ResponseEntity<List<RegistroAutomatizadoTelefonoDTO>> consultarTelefonosConEquipos() {
         return ResponseEntity.ok(consultasAutomatizadasService.listarTelefonosConEquipos());
+    }
+
+    @GetMapping("/equipo-completo")
+    public ResponseEntity<List<EquipoCompletoDTO>> consultarEquipoCompleto() {
+        return ResponseEntity.ok(consultasAutomatizadasService.obtenerTodosLosEquipos());
+    }
+
+    @GetMapping("/usuarios-completos")
+    public ResponseEntity<List<UsuariosCompletosDTO>> consultarUsuariosCompletos() {
+        return ResponseEntity.ok(usuarioConsultarService.obtenerUsuariosCompletos());
     }
 }

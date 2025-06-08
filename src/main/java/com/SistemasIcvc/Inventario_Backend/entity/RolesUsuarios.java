@@ -1,5 +1,6 @@
 package com.SistemasIcvc.Inventario_Backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +19,7 @@ public class RolesUsuarios {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
+    @JsonIgnore
     private Usuario usuario;
 
     @ManyToOne(fetch = FetchType.LAZY)

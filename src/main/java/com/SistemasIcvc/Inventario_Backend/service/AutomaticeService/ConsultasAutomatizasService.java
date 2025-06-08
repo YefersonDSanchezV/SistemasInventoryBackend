@@ -7,6 +7,7 @@ import com.SistemasIcvc.Inventario_Backend.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,7 @@ public class ConsultasAutomatizasService {
     private final CamaraMapper camaraMapper;
     private final EquipoMapper equipoMapper;
     private final MovilMapper movilMapper;
+    private final EquipoRepository equipoRepository;
 
     public List<RegistroAutomatizadoComputadoraDTO> listarComputadorasConComponentes() {
         List<Computadora> computadoras = computadoraRepository.findAll();
@@ -83,5 +85,27 @@ public class ConsultasAutomatizasService {
             dto.setEquipo(equipoMapper.toDto(tel.getEquipo()));
             return dto;
         }).collect(Collectors.toList());
+    }
+
+    public List<EquipoCompletoDTO> obtenerTodosLosEquipos(){
+        List<Equipo> equipos = equipoRepository.findAll();
+        List<EquipoCompletoDTO> resultado = new ArrayList<>();
+
+        for ( Equipo equipo : equipos){
+            EquipoCompletoDTO dto = new EquipoCompletoDTO();
+            dto.setEquipo(equipo);
+
+            dto.setComputadora(computadoraRepository.findByEquipo(equipo).orElse(null));
+            dto.setCamara(camaraRepository.findByEquipo(equipo).orElse(null));
+            dto.setImpresora(impresoraRepository.findByEquipo(equipo).orElse(null));
+            dto.setMovil(movilRepository.findByEquipo(equipo).orElse(null));
+            dto.setTelefono(telefonoRepository.findByEquipo(equipo).orElse(null));
+
+            if(dto.getComputadora() != null){
+                dto.setComponentes(componenteRepository.findByComputadora(dto.getComputadora()));
+            }
+            resultado.add(dto);
+        }
+        return resultado;
     }
 }

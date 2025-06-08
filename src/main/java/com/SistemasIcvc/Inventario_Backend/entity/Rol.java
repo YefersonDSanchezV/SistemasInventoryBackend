@@ -1,5 +1,6 @@
 package com.SistemasIcvc.Inventario_Backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,6 +23,7 @@ public class Rol {
     private String nombreRol;
 
     @OneToMany(mappedBy = "rol", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<RolesUsuarios> rolesUsuarios;
 }
 

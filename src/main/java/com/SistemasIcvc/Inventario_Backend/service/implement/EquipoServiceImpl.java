@@ -76,6 +76,14 @@ public class EquipoServiceImpl implements EquipoService {
     }
 
     @Override
+    public EquipoDTO consultarPorNombre(String nombre) {
+        Equipo equipo = equipoRepository.findByNombreMaquina(nombre)
+                .orElseThrow(() -> new RuntimeException("Equipo no encontrado con nombre: " + nombre));
+        return equipoMapper.toDto(equipo);
+    }
+
+
+    @Override
     public List<EquipoDTO> consultarPorFechaRegistro(String fecha) {
         return equipoRepository.findAll().stream()
                 .filter(e -> e.getFechaRegistro().toString().contains(fecha))

@@ -12,4 +12,5 @@ import org.springframework.data.repository.query.Param;
 public interface EquipoRepository extends JpaRepository<Equipo, Integer> {
     Optional<Equipo> findFirstByEstadoIgnoreCase(String estado);
     Optional<Equipo> findFirstByNombreMaquinaIgnoreCase(String nombreMaquina);
+    Optional<Equipo> findByNombreMaquina(String nombreMaquina);
 }

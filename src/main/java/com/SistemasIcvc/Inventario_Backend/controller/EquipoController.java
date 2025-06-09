@@ -46,6 +46,12 @@ public class EquipoController {
         return ResponseEntity.ok(equipo);
     }
 
+    @GetMapping("/nombre/{nombre}")
+    public ResponseEntity<EquipoDTO> consultarPorNombre(@PathVariable String nombre) {
+        EquipoDTO equipo = equipoService.consultarPorNombre(nombre);
+        return ResponseEntity.ok(equipo);
+    }
+
     @GetMapping("/fecha/{fecha}")
     public ResponseEntity<List<EquipoDTO>> consultarPorFechaRegistro(@PathVariable String fecha) {
         List<EquipoDTO> equipos = equipoService.consultarPorFechaRegistro(fecha);

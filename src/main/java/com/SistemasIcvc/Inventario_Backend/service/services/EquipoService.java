@@ -12,6 +12,7 @@ public interface EquipoService {
     EquipoDTO editarEquipoPorEstado(String estado, EquipoDTO equipoDTO);
     EquipoDTO editarEquipoPorNombre(String nombre, EquipoDTO equipoDTO);
     EquipoDTO consultarPorId(Long id);
+    EquipoDTO consultarPorNombre(String nombre);
     List<EquipoDTO> consultarPorFechaRegistro(String fecha); // considerar usar LocalDate
     List<EquipoDTO> consultarPorEstado(String estado);
     List<EquipoDTO> listarTodos();
